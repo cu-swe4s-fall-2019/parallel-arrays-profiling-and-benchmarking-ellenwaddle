@@ -62,7 +62,6 @@ def boxplot(L, out_file_name, groups):
     if L == []:
         raise ValueError('empty list, nothing to graph')
 
-
     if file.exists():
 
         return ('this file name is taken, choose another.')
