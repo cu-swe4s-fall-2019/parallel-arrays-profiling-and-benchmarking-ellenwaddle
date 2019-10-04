@@ -8,7 +8,9 @@ Files:
 Profiling and Benchmarking:
 - you'll find two different search functions: linear and binary. Linear searching is as expected: the algorithm searches an array in order. A binary search searches like a 'dictionary'; it uses the fact that a list can be ordered, and is able to more effectively by starting in the middle of an array, moving left or right, and searching the new shortened array, and continuing.
 
-- using the dataset provided, I tested the speed of both searches. The linear search took nearly 15 seconds to complete, while the binary was about a second. It was a 98% improvement. 
+- using the dataset provided, I tested the speed of both searches. The linear search took nearly 15 seconds to complete, while the binary was about a second. It was a 98% improvement.
+
+- I also profiled the speed of the version with only the linear search. the results of this Cprofile (terminal command is python -m Cprofile -s tottime plot_gtex.py), and the results of this file are in plot_gtex_linear_search.txt. 
 
 Startup:
 
