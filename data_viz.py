@@ -5,7 +5,6 @@ import pathlib
 import matplotlib
 matplotlib.use('Agg')
 
-
 def histogram(L, out_file_name):
 
     file = pathlib.Path(out_file_name)
@@ -55,11 +54,14 @@ def boxplot(L, out_file_name):
         title = 'mean=' + str(mean) + ' stdev=' + str(stdev)
 
         fig = plt.figure(figsize=(width, height), dpi=300)
+        n=length(L)
+
         ax = fig.add_subplot(1, 1, 1)
         ax.set_title(title)
         ax.boxplot(L)
         ax.set_xlabel('value')
         ax.set_ylabel('frequency')
+        ax.set_title('[user] add appropriate title here')
 
         plt.savefig(out_file_name, bbox_inches='tight')
 
