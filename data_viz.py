@@ -5,15 +5,30 @@ import pathlib
 import matplotlib
 matplotlib.use('Agg')
 
-def histogram(L, out_file_name):
+def histogram(L, out_file_name, groups):
 
     file = pathlib.Path(out_file_name)
 
     if file.exists():
 
         return ('this file name is taken, choose another.')
+        sys.exit(1)
+
+    if L is None:
+        raise ValueError ('empty list, nothing to graph')
+
+    if L is []:
+        raise ValueError('empty list, nothing to graph')
+
+
 
     else:
+        ticks = []
+        j = 1
+
+        for i in groups:
+            ticks.append(k)
+            j += 1
 
         width = 3
         height = 3
@@ -27,6 +42,7 @@ def histogram(L, out_file_name):
         ax.set_title(title)
         ax.set_xlabel('value')
         ax.set_ylabel('frequency')
+        ax.xticks(ticks, groups, rotation='vertical')
 
         ax.hist(L, 3)
 
@@ -37,7 +53,7 @@ def histogram(L, out_file_name):
             print('the plot did not save successfully.')
 
 
-def boxplot(L, out_file_name):
+def boxplot(L, out_file_name, groups):
 
     file = pathlib.Path(out_file_name)
 
@@ -47,26 +63,32 @@ def boxplot(L, out_file_name):
 
     else:
 
+        ticks = []
+        j = 1
+
+        for i in groups:
+            ticks.append(j)
+            j += 1
+
         width = 3
         height = 3
-        mean = ml.list_mean(L)
-        stdev = ml.list_stdev(L)
-        title = 'mean=' + str(mean) + ' stdev=' + str(stdev)
+        #mean = ml.list_mean(L)
+        #stdev = ml.list_stdev(L)
+        #title = 'mean=' + str(mean) + ' stdev=' + str(stdev)
 
         fig = plt.figure(figsize=(width, height), dpi=300)
-        n=length(L)
 
         ax = fig.add_subplot(1, 1, 1)
-        ax.set_title(title)
         ax.boxplot(L)
         ax.set_xlabel('value')
         ax.set_ylabel('frequency')
         ax.set_title('[user] add appropriate title here')
+        plt.xticks(ticks, groups, rotation='vertical')
 
         plt.savefig(out_file_name, bbox_inches='tight')
 
-        if not file.exists():
-            print('the plot did not save successfully.')
+    if not file.exists():
+        print('the plot did not save successfully.')
 
 
 def combo(L, out_file_name):
