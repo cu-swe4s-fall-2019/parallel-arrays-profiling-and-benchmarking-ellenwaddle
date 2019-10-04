@@ -17,4 +17,4 @@ script:
   - bash test.sh
   - pycodestyle data_viz.py
   - pycodestyle test_data_viz.py
-  - pycodestyple plot_gtex.py
+  - pycodestyle plot_gtex.py
