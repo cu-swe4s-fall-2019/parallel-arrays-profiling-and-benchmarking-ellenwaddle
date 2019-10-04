@@ -10,7 +10,7 @@ Profiling and Benchmarking:
 
 - using the dataset provided, I tested the speed of both searches. The linear search took nearly 15 seconds to complete, while the binary was about a second. It was a 98% improvement.
 
-- I also profiled the speed of the version with only the linear search. the results of this Cprofile (terminal command is python -m Cprofile -s tottime plot_gtex.py), and the results of this file are in plot_gtex_linear_search.txt. 
+- I also profiled the speed of the version with only the linear search. the results of this Cprofile (terminal command is python -m Cprofile -s tottime plot_gtex.py), and the results of this file are in plot_gtex_linear_search.txt.
 
 Startup:
 
