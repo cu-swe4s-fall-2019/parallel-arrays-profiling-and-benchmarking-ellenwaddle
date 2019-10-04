@@ -5,6 +5,7 @@ import pathlib
 import matplotlib
 matplotlib.use('Agg')
 
+
 def histogram(L, out_file_name, groups):
 
     file = pathlib.Path(out_file_name)
@@ -15,12 +16,10 @@ def histogram(L, out_file_name, groups):
         sys.exit(1)
 
     if L is None:
-        raise ValueError ('empty list, nothing to graph')
+        raise ValueError('empty list, nothing to graph')
 
     if L is []:
         raise ValueError('empty list, nothing to graph')
-
-
 
     else:
         ticks = []
@@ -57,9 +56,17 @@ def boxplot(L, out_file_name, groups):
 
     file = pathlib.Path(out_file_name)
 
+    if L is None:
+        raise ValueError('empty list, nothing to graph')
+
+    if L == []:
+        raise ValueError('empty list, nothing to graph')
+
+
     if file.exists():
 
         return ('this file name is taken, choose another.')
+        sys.exit(1)
 
     else:
 
@@ -72,9 +79,6 @@ def boxplot(L, out_file_name, groups):
 
         width = 3
         height = 3
-        #mean = ml.list_mean(L)
-        #stdev = ml.list_stdev(L)
-        #title = 'mean=' + str(mean) + ' stdev=' + str(stdev)
 
         fig = plt.figure(figsize=(width, height), dpi=300)
 

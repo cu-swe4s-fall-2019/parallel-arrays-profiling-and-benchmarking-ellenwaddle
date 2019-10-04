@@ -2,13 +2,16 @@ import data_viz as dv
 import gzip
 import sys
 import matplotlib as ml
-ml.use('Agg')
-import matplotlib.pylab as plt
 import time
+import matplotlib.pylab as plt
+ml.use('Agg')
+
 
 t0_linear = time.time()
 
+
 def linear_search(key, L):
+
     hit = -1
     for i in range(len(L)):
         curr = L[i]
@@ -16,10 +19,14 @@ def linear_search(key, L):
             return i
     return -1
 
-data_file_name = 'GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct.gz'
-sample_info_file_name = 'GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt'
 
-tissue_group_name = 'SMTS' #could also change this to 'SMTSD' for tissue type
+data_file_name =
+'GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct.gz'
+
+sample_info_file_name =
+'GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt'
+
+tissue_group_name = 'SMTS'  # could also change this to 'SMTSD' for tissue type
 sample_id_col_name = 'SAMPID'
 
 samples = []
@@ -27,8 +34,8 @@ sample_info_header = None
 
 
 for l in open(sample_info_file_name):
-    if sample_info_header == None:
-        sample_info_header=l.rstrip().split('\t')
+    if sample_info_header is None:
+        sample_info_header = l.rstrip().split('\t')
     else:
         samples.append(l.rstrip().split('\t'))
 
@@ -59,18 +66,18 @@ data_header = None
 gene_name_col = 1
 gene_name = 'BRCA2'
 
-group_counts = [ [] for i in range(len(groups))]
+group_counts = [[] for i in range(len(groups))]
 
 for l in gzip.open(data_file_name, 'rt'):
-    if version == None:
+    if version is None:
         version = l
         continue
 
-    if dim == None:
+    if dim is None:
         dim = [int(x) for x in l.rstrip().split()]
         continue
 
-    if data_header == None:
+    if data_header is None:
         data_header = l.rstrip().split('\t')
         continue
 
@@ -87,14 +94,13 @@ for l in gzip.open(data_file_name, 'rt'):
 t1_linear = time.time()
 total_linear_time = t1_linear-t0_linear
 
-######
-### going to repeat to demonstrate time difference w binary search.
-t0_binary = time.time()
+t0_binary = time.time()  # repeat to show time diff w binary search.
+
 
 def binary_search(key, D):
     lo = -1
     hi = len(D)
-    while (hi - lo >1):
+    while (hi - lo > 1):
         mid = (hi + lo) // 2
 
         if key == D[mid][0]:
@@ -134,18 +140,18 @@ data_header = None
 gene_name_col = 1
 gene_name = 'BRCA2'
 
-group_counts = [ [] for i in range(len(groups))]
+group_counts = [[] for i in range(len(groups))]
 
 for l in gzip.open(data_file_name, 'rt'):
-    if version == None:
+    if version is None:
         version = l
         continue
 
-    if dim == None:
+    if dim is None:
         dim = [int(x) for x in l.rstrip().split()]
         continue
 
-    if data_header == None:
+    if data_header is None:
         data_header = l.rstrip().split('\t')
         continue
 
@@ -161,14 +167,15 @@ for l in gzip.open(data_file_name, 'rt'):
 
 t1_binary = time.time()
 total_binary_time = t1_binary-t0_binary
-print(total_linear_time, total_binary_time,
-    (total_linear_time-total_binary_time)/total_linear_time)
+prop_increase = (total_linear_time - total_binary_time) / total_linear_time
+print(total_linear_time, total_binary_time, prop_increase)
 
-dv.boxplot(group_counts,'BRCA2.png', tissue_group_name)
+dv.boxplot(group_counts, 'BRCA2.png', tissue_group_name)
 
 
 def main():
     pass
+
 
 if __name__ == '__main__':
     main()
