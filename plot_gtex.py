@@ -4,11 +4,14 @@ import sys
 import matplotlib as ml
 import time
 import matplotlib.pylab as plt
+from hash-tables-ellenwaddle import hash_functions as hf
+from hash-tables-ellenwaddle import hash_tables as ht 
 ml.use('Agg')
 
-
+###use this script to plot gene expression distribution in tissue groups (SMST)
 t0_linear = time.time()
 
+def read_file(f)
 
 def linear_search(key, L):
 
