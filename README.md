@@ -12,15 +12,26 @@ Profiling and Benchmarking:
 
 - I also profiled the speed of the version with only the linear search. the results of this Cprofile (terminal command is python -m Cprofile -s tottime plot_gtex.py), and the results of this file are in plot_gtex_linear_search.txt.
 
+-version 2.0: added a hash function. I coudldn't get it to work with my input file, there is a bug that I can't figure out. I am guessing it will be faster than parallel arrays.
+
 Startup:
 
 ```
-import unittest
-import sys
-import os
 import data_viz as dv
+import gzip
+import sys
+import argparse
+import matplotlib as ml
 import time
+import matplotlib.pylab as plt
+sys.path.insert(1, "./hash-tables-ellenwaddle")
+import hash_functions as hf
+import hash_tables as ht
+ml.use('Agg')
+git submodule update --init
 
+
+python plot_gtex.py --gene_reads GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct --sample GTEx_Analysis_v8_Annotations_SampleAttributesDS --gene ACTA2 --group_type SMTS --output_file 'ACTA2.png'
 
 
 ```
