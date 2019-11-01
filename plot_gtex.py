@@ -4,10 +4,21 @@ import sys
 import matplotlib as ml
 import time
 import matplotlib.pylab as plt
+from hash-tables-ellenwaddle import hash_functions as hf
+from hash-tables-ellenwaddle import hash_tables as ht
 ml.use('Agg')
 
+###use this script to plot gene expression distribution in tissue groups (SMST)
+#t0_linear = time.time()
 
-t0_linear = time.time()
+
+data_file_name =
+'GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct'
+sample_info_file_name =
+'GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt'
+tissue_group_name = 'SMTS'  # could also change this to 'SMTSD' for tissue type
+sample_id_col_name = 'SAMPID'
+gene_name = 'BRCA2'
 
 
 def linear_search(key, L):
@@ -20,24 +31,41 @@ def linear_search(key, L):
     return -1
 
 
-data_file_name =
-'GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.acmg_59.gct.gz'
-
-sample_info_file_name =
-'GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt'
-
-tissue_group_name = 'SMTS'  # could also change this to 'SMTSD' for tissue type
-sample_id_col_name = 'SAMPID'
-
 samples = []
 sample_info_header = None
 
 
-for l in open(sample_info_file_name):
-    if sample_info_header is None:
-        sample_info_header = l.rstrip().split('\t')
-    else:
-        samples.append(l.rstrip().split('\t'))
+def hashfct(group, file):
+    header = None
+    target = []
+    hash = ht.ChainedHash(90000, hf.h_rolling)
+
+    for l in open(file):
+        sample_data = l.rstrip().split('\t')
+        if header is None:
+            header = sample_data
+            continue
+
+        sample_id = linear_search('SAMPID', header)
+        target_id = linear_search(group, header)
+
+        if target_id == -1:
+            return None, target
+
+        key = sample_data[target_id]
+        val = sample_data[sample_id]
+        query = hash.search(key)
+
+        if search is None:
+            hash.add(key, [val])
+            target.append(key)
+        else:
+            search.append(value)
+
+        return hash, target
+
+
+
 
 tissue_group_idx = linear_search(tissue_group_name, sample_info_header)
 sample_id_col_idx = linear_search(sample_id_col_name, sample_info_header)
@@ -68,7 +96,7 @@ gene_name = 'BRCA2'
 
 group_counts = [[] for i in range(len(groups))]
 
-for l in gzip.open(data_file_name, 'rt'):
+for l in open(data_file_name, 'rt'): #no longer a gzip so I removed gzip.open
     if version is None:
         version = l
         continue
@@ -138,7 +166,7 @@ dim = None
 data_header = None
 
 gene_name_col = 1
-gene_name = 'BRCA2'
+
 
 group_counts = [[] for i in range(len(groups))]
 
@@ -165,17 +193,73 @@ for l in gzip.open(data_file_name, 'rt'):
                     group_counts[group_idx].append(int(A[member_idx]))
         break
 
-t1_binary = time.time()
-total_binary_time = t1_binary-t0_binary
-prop_increase = (total_linear_time - total_binary_time) / total_linear_time
-print(total_linear_time, total_binary_time, prop_increase)
+#t1_binary = time.time()
+#total_binary_time = t1_binary-t0_binary
+#prop_increase = (total_linear_time - total_binary_time) / total_linear_time
+#print(total_linear_time, total_binary_time, prop_increase)
 
-dv.boxplot(group_counts, 'BRCA2.png', tissue_group_name)
 
 
 def main():
-    pass
+    parser = argparse.ArgumentParser(
+                description='find tissue counts for specific gene',
+                prog='bay')
+    parser.add_argument('--gene_reads',
+                type=str,
+                help='GTEX gene counts',
+                required=True)
+    parser.add_argument('--sample',
+                type=str,
+                help='GTEX samples file',
+                required=True)
+    parser.add_argument('--gene',
+                type=str,
+                help='gene name',
+                required=True)
+    parser.add_argument('--output_file',
+                type=str,
+                help='desired output file name',
+                required=True)
 
+    args=parser.parse_args()
+
+    version = None
+    dim = None
+    count_headers = None
+    for l in gzip.open(args.gene_reads, 'rt'):
+        if version is None:
+            v = l
+            continue
+        if dim is None:
+            dim = l
+            continue
+        if count_headers is None:
+            count_headers = l.rstrip.split('\t')
+            count_h = []
+            for i in range(len(count_headers)):
+                count_h.append([count_header[i], i])
+
+        counts = l.rstrip().split('\t')
+        d_id = linear_search('Description', count_headers)
+
+    if counts[d_id] == args.gene: #might need to change this
+        to_return = []
+        chainedhash = ht.ChainedHash(1000000, hf.h_rolling)
+        for i in range (d_id +1, len(count_headers)):
+            chainedhash.add(count_headers[i], int(counts[i]))
+        for t in group:
+            list_counts = []
+            location = table.search(t)
+            if location is None:
+                continue
+            for s in location:
+                count = chainedhash.search(s)
+                if count is None:
+                    continue
+                list_counts.append(count)
+            to_return.append(list_counts)
+
+        dv.boxplot(to_return, args.output_file, 'x', 'y', 'title', groups = group)
 
 if __name__ == '__main__':
     main()

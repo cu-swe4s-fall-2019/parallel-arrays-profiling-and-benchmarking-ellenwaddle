@@ -1,0 +1,3 @@
+[submodule "hash-tables-ellenwaddle"]
+	path = hash-tables-ellenwaddle
+	url = https://github.com/cu-swe4s-fall-2019/hash-tables-ellenwaddle.git
